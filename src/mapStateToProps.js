@@ -1,41 +1,48 @@
 import ActionTypes from './ActionTypes';
-import { connectAdvanced } from 'react-redux';
 export const mapStateToProps = function (state) {
     return {
         datasetInput: state.datasetInput,
         DataLoading: state.dataLoading,
         startDate: state.startDate,
         endDate: state.endDate,
-        baseCurrency: "USD",
-        currencies: ["INR"]
+        baseCurrency: state.baseCurrency,
+        currencies: state.currencies,
+        availableCurrencies: state.availableCurrencies
     };
 };
 export const mapDispatchToProps = function (dispatch) {
     return {
         LoadCurrencies: () => {
             dispatch(LoadCurrenciesThunk())
+        },
+        ChangeDate: (value, date) => {
+            dispatch({ type: ActionTypes.CHANGE_DATE, dateType: value, val: date });
+        },
+        AddCurrencies: (name, isChecked) => {
+            dispatch({ type: ActionTypes.ADD_CURRENCIES, currency: name, isCurrencyChecked: isChecked })
+        },
+        SetBaseCurrency: (name) => { dispatch({ type: ActionTypes.SET_BASECURRENCY, currency: name }) }
 
-        }
     };
 };
 function LoadCurrenciesThunk() {
     return (dispatch, getState) => {
         var state = getState();
-        LoadCurrenciesFromAPI(state.startDate, state.endDate, dispatch);
+        LoadCurrenciesFromAPI(state, dispatch);
     }
 }
 var LoadDatasetforChart = (apiResponse) => {
 
-    var labels1 = []
+    var dateLabels = []
     var datasets1 = []
     Object.keys(apiResponse).sort().forEach((s, i) => {
-        labels1.push(s);
+        dateLabels.push(s);
         if (i == 0) {
             Object.keys(apiResponse[s]).forEach(key => {
                 datasets1.push({
                     data: [],
                     label: key,
-                    borderColor: "#3e95cd",
+                    borderColor: '#'+Math.random().toString(16).substr(-6),
                     fill: false
                 })
             })
@@ -45,17 +52,16 @@ var LoadDatasetforChart = (apiResponse) => {
         for (let index = 0; index < arr.length; index++) {
             datasets1[index].data.push(apiResponse[s][arr[index]])
         }
-
     })
-
     return {
-        labels: labels1,
+        labels: dateLabels,
         datasets: datasets1
     }
 }
-function LoadCurrenciesFromAPI(startDate, endDate, dispatch) {
+function LoadCurrenciesFromAPI(state, dispatch) {
     dispatch({ type: ActionTypes.CURRENCIES_LOADING })
-    var api = `https://api.exchangeratesapi.io/history?start_at=${startDate}&end_at=${endDate}&symbols=INR&base=USD`;
+    var currencies = state.currencies.length === 0 ? "INR" : state.currencies.join(",")
+    var api = `https://api.exchangeratesapi.io/history?start_at=${state.startDate}&end_at=${state.endDate}&symbols=${currencies}&base=${state.baseCurrency}`;
     fetch(api)
         .then(response => {
             return (response.json());

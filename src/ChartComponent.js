@@ -8,6 +8,8 @@ class ChartComponent extends Component {
     componentDidMount() {
         this.props.LoadCurrencies()
         console.log(this.props.datasetInput)
+
+        
     }
     render() {
 

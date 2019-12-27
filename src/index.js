@@ -12,10 +12,12 @@ import thunk from 'redux-thunk';
 
 var initialState = {
     dataLoading: false,
-    "base": "USD",
     "startDate": moment().subtract(30, 'days').format("YYYY-MM-DD"),
     "endDate": moment().format("YYYY-MM-DD"),
-    datasetInput: {}
+    datasetInput: {},
+    baseCurrency: "USD",
+    currencies: [],
+    availableCurrencies: ["CAD","HKD","ISK","PHP","DKK","HUF","CZK","GBP","RON","SEK","IDR","INR","BRL","RUB","HRK","JPY","THB","CHF","EUR","MYR","BGN","TRY","CNY","NOK","NZD","ZAR","USD","MXN","SGD","AUD","ILS","KRW","PLN"]
 }
 const store = createStore(reducers, initialState, applyMiddleware(thunk));
 
