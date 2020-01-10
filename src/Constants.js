@@ -1,0 +1,46 @@
+import moment from "moment";
+export var InitialState = {
+  dataLoading: false,
+  startDate: moment()
+    .subtract(30, "days")
+    .format("YYYY-MM-DD"),
+  endDate: moment().format("YYYY-MM-DD"),
+  datasetInput: {},
+  baseCurrency: "USD",
+  comparedCurrency: "INR",
+  availableCurrencies: [
+    { name: "AUD", IsSelected: false },
+    { name: "BGN", IsSelected: false },
+    { name: "BRL", IsSelected: false },
+    { name: "CAD", IsSelected: false },
+    { name: "CHF", IsSelected: false },
+    { name: "CNY", IsSelected: false },
+    { name: "CZK", IsSelected: false },
+    { name: "DKK", IsSelected: false },
+    { name: "EUR", IsSelected: false },
+    { name: "GBP", IsSelected: false },
+    { name: "HKD", IsSelected: false },
+    { name: "HRK", IsSelected: false },
+    { name: "HUF", IsSelected: false },
+    { name: "IDR", IsSelected: false },
+    { name: "ILS", IsSelected: false },
+    { name: "INR", IsSelected: false },
+    { name: "ISK", IsSelected: false },
+    { name: "JPY", IsSelected: false },
+    { name: "KRW", IsSelected: false },
+    { name: "MXN", IsSelected: false },
+    { name: "MYR", IsSelected: false },
+    { name: "NOK", IsSelected: false },
+    { name: "NZD", IsSelected: false },
+    { name: "PHP", IsSelected: false },
+    { name: "PLN", IsSelected: false },
+    { name: "RON", IsSelected: false },
+    { name: "RUB", IsSelected: false },
+    { name: "SEK", IsSelected: false },
+    { name: "SGD", IsSelected: false },
+    { name: "THB", IsSelected: false },
+    { name: "TRY", IsSelected: false },
+    { name: "USD", IsSelected: false },
+    { name: "ZAR", IsSelected: false }
+  ]
+};
